@@ -209,20 +209,21 @@ library(DALEXtra)
 
 load(file = "210603_final_tuned_models.Robj")
 
+set.seed(42)
 rfx <- explain_mlr3(rf_final,
                     data     = Glass[,-10],
                     y        = Glass$Type,
                     label    = "random forest"
                     )
 
-pdp <- model_profile(rfx, variables = names(Glass[,-10]), type = "partial") # $agr_profiles
-plot(pdp)
-
 nnx <- explain_mlr3(nn_final,
                     data     = Glass[,-10],
                     y        = Glass$Type,
                     label    = "neural net"
 )
+
+pdp <- model_profile(rfx, variables = names(Glass[,-10]), type = "partial") # $agr_profiles
+plot(pdp)
 
 pdp <- model_profile(nnx, variables = names(Glass[,-10]), type = "partial") # $agr_profiles
 plot(pdp)
